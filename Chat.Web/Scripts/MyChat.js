@@ -654,8 +654,8 @@ $(function () {
     }
 
 
-
     var model = new Model();
     ko.applyBindings(model);
 
 });
+

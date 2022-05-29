@@ -15,7 +15,7 @@ namespace Chat.Web.Hubs
     public class ChatHub : Hub
     {
         private bool flag = false;
-
+        private bool connected = false;
         #region Properties
         /// <summary>
         /// List of online users
@@ -581,6 +581,7 @@ namespace Chat.Web.Hubs
         #region OnConnected/OnDisconnected
         public override Task OnConnected()
         {
+        
             using (var db = new ApplicationDbContext())
             {
                 // First run?
@@ -616,24 +617,31 @@ namespace Chat.Web.Hubs
 
                     Clients.All.UpdateUser(userViewModel);
 
-                    
+                    flag = true;
                     _Connections.Add(userViewModel);
                     _ConnectionsMap.Add(IdentityName, Context.ConnectionId);
-                    flag = true;
-
-                    if(flag == true)
-                    {
-                        _ConnectionsMap.Remove(Context.ConnectionId);
-                        _ConnectionsMap.Remove(IdentityName);
-                    }
+                  
+                    
+                  
                     Clients.Caller.getProfileInfo(user.Id, user.UserName, user.DisplayName, user.Avatar,user.Online);
-                   
+
+
                    
                 }
                 catch (Exception ex)
                 {
- 
-                    Clients.Caller.onError("Konekcija:" + ex.Message);
+
+                    if (flag == true)
+                    {
+                        _ConnectionsMap.Remove(IdentityName);
+                        _ConnectionsMap.Remove(Context.ConnectionId);
+             
+                    }
+                   
+                    else
+                    {
+                        Clients.Caller.onError("Konekcija:" + ex.Message);
+                    }
                    
                 }
             }
@@ -660,6 +668,7 @@ namespace Chat.Web.Hubs
 
                 // Remove mapping
                 _ConnectionsMap.Remove(user.UserName);
+                _ConnectionsMap.Remove(user.Id);
                 
             }
             catch (Exception ex)

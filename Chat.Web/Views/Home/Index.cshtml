@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "Početna stranica";
 }
-
 @section scripts {
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.signalR-2.2.1.min.js"></script>
@@ -11,6 +10,8 @@
     <script src="~/Scripts/MyScript.js"></script>
     <script src="~/signalr/hubs"></script>
 }
+
+
 
     <div class="row main-container">
         <div class="col-md-2 left">
@@ -44,7 +45,7 @@
                 </div>
             </div>
         </div>
-      
+
 
         <div class="col-md-7 middle">
             <div class="chat-header">
@@ -68,6 +69,8 @@
                 <!-- /ko -->
                 <!-- /ko -->
             </div>
+
+
             <div class="chat-body better-scrollbar">
                 <ul data-bind="foreach: chatMessages">
                     <li>
@@ -135,6 +138,8 @@
                        data-bind="value:message, valueUpdate: 'afterkeydown', event: { keypress: onEnter }" placeholder="Upišite poruku ovde..." />
             </div>
         </div>
+
+
         <div class="col-md-3 right">
             <div class="header">
                 <h5>Lista korisnika (<span data-bind="text: filteredChatUsers().length">0</span>)</h5>
@@ -163,7 +168,6 @@
             </div>
         </div>
     </div>
-
 <!-- NAPRAVI SOBU MODAL -->
 <div class="modal" id="create-room-modal">
     <div class="modal-dialog" style="width: 70%!important">
@@ -192,7 +196,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer" style="margin-top: 300px!important;">
                 <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: closeRoom">Zatvori</button>
@@ -201,7 +204,6 @@
         </div>
     </div>
 </div>
-
 <!-- EDIT ROOM MODAL -->
 <div class="modal" id="edit-room-modal">
     <div class="modal-dialog" style="width: 70%!important">
@@ -234,11 +236,9 @@
                             <!-- ko ifnot: $data.roomRole -->
                             <button type="button" class="btn btn-primary" data-bind="click: $parent.removeUserSelectedRoom.bind($parent, $data, 'edit')">Izbriši</button>
                             <!-- /ko -->
-
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer" style="margin-top: 300px!important;">
                 <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: closeRoom">Zatvori</button>
@@ -247,7 +247,6 @@
         </div>
     </div>
 </div>
-
 <!-- REMOVE ROOM MODAL -->
 <div class="modal" id="remove-room-modal">
     <div class="modal-dialog" style="width: 900px!important;">
@@ -266,8 +265,10 @@
         </div>
     </div>
 </div>
-
 <div class="alert alert-dismissible alert-warning hidden" id="errorAlert">
     <button type="button" class="close" data-dismiss="alert">&times;</button>
     <p data-bind="text:serverInfoMessage"></p>
 </div>
+
+
+
