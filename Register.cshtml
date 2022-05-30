@@ -1,0 +1,82 @@
+﻿@using Chat.Web.Models
+@model RegisterViewModel
+
+@{
+    ViewBag.Title = "Registracija";
+}
+
+<div class="lr-container register-container">
+    <div class="col-md-4">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3>Kreirajte novi nalog</h3>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", @placeholder = "Username" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Lozinka" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", @placeholder = "Potvrdi lozinku" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control", @placeholder = "Prikaz imena" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    <div class="col-md-12">
+                        @Html.TextBoxFor(m => m.Avatar, new { @class = "form-control" })
+                    </div>
+                </div>*@
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                    <p>Izaberite avatar sliku</p>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "0", new { @checked = true })
+                            <img class="avatar-icon" src="~/Content/icons/avatar1.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "1")
+                            <img class="avatar-icon" src="~/Content/icons/avatar2.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "2")
+                            <img class="avatar-icon" src="~/Content/icons/avatar3.png" alt="" />
+                        </label>
+                        <label>
+                            @Html.RadioButtonFor(m => m.Avatar, "3")
+                            <img class="avatar-icon" src="~/Content/icons/avatar4.png" alt="" />
+                        </label>
+                    </div>
+                </div>
+
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" class="btn btn-default btn-register" value="Registruj se" />
+                </div>
+            </div>
+        }
+                @Html.ActionLink("Imate nalog?", "Login", "Account")
+
+    </div>
+    <div class="col-md-8">
+        <img src="~/Content/pictures/rtc.jpg" style="position: absolute; width: 590px; height: 370px; margin-top: 80px; margin-left: 10px; border-radius: 8px; " />
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
