@@ -454,7 +454,7 @@ $(function () {
                 });
             }
             else {
-                console.log("Tên phòng không được để trống!");
+                console.log("Sobu je nemoguće izmeniti!");
             }
 
         },
@@ -475,10 +475,7 @@ $(function () {
             //});
         },
 
-        deleteRoom: function () {
-            var self = this;
-            chatHub.server.deleteRoom(self.joinedRoom.id);
-        },
+       
 
         messageHistory: function (fromUserId = null, toUserId = null) {
             var self = this;

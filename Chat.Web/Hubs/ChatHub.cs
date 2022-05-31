@@ -15,7 +15,6 @@ namespace Chat.Web.Hubs
     public class ChatHub : Hub
     {
         private bool flag = false;
-        private bool connected = false;
         #region Properties
         /// <summary>
         /// List of online users
@@ -38,6 +37,7 @@ namespace Chat.Web.Hubs
         /// </summary>
         private readonly static Dictionary<string, string> _ConnectionsMap = new Dictionary<string, string>();
         #endregion
+
 
         public int Send(int roomId, string fromUserId, string toUserId, string message)
         {
@@ -399,33 +399,7 @@ namespace Chat.Web.Hubs
                 Clients.Caller.onError("Nemoguće je ukloniti pinovanu poruku: " + ex.Message);
             }
         }
-        public void DeleteRoom(int roomId)
-        {
-            try
-            {
-                using (var db = new ApplicationDbContext())
-                {
-                    // Delete from database
-                    var room = db.Rooms.Where(r => r.Id == roomId && r.UserAccount.UserName == IdentityName).FirstOrDefault();
-                    db.Rooms.Remove(room);
-                    db.SaveChanges();
-
-                    // Delete from list
-                    var roomViewModel = _Rooms.First<RoomViewModel>(r => r.Id == roomId);
-                    _Rooms.Remove(roomViewModel);
-
-                    // Move users back to Lobby
-                    Clients.Group(roomId.ToString()).onRoomDeleted(string.Format("Soba {0} je izbrisana!", roomId));
-
-                    // Tell all users to update their room list
-                    Clients.All.removeChatRoom(roomViewModel);
-                }
-            }
-            catch (Exception)
-            {
-                Clients.Caller.onError("Soba ne može da se izbriše.");
-            }
-        }
+    
 
         public IEnumerable<MessageViewModel> GetMessageHistory(int roomId, string fromUserId, string toUserId)
         {
@@ -595,6 +569,7 @@ namespace Chat.Web.Hubs
                     }
 
                 }
+            
             }
 
 
@@ -635,7 +610,9 @@ namespace Chat.Web.Hubs
                     {
                         _ConnectionsMap.Remove(IdentityName);
                         _ConnectionsMap.Remove(Context.ConnectionId);
-             
+
+
+
                     }
                    
                     else
@@ -681,17 +658,21 @@ namespace Chat.Web.Hubs
 
         public override Task OnReconnected()
         {
+
             //Ponovno povezivanje na refreshu
             if (flag == false)
             {
                 using (var db = new ApplicationDbContext())
                 {
+
                     var usereconnected = db.Users.Where(u => u.UserName == IdentityName).FirstOrDefault();
 
                     var userViewModel = Mapper.Map<ApplicationUser, UserViewModel>(usereconnected);
 
                     _Connections.Add(userViewModel);
                     _ConnectionsMap.Add(IdentityName, Context.ConnectionId);
+
+
                 }
             } 
 

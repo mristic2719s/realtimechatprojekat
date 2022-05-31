@@ -12,13 +12,14 @@
 }
 
 
-
     <div class="row main-container">
         <div class="col-md-2 left">
             <div class="header">
                 <h5>Chat sobe</h5>
                 <a href="#" id="create-room" data-toggle="modal" data-target="#create-room-modal"><span class="glyphicon glyphicon-plus"></span></a>
+
             </div>
+
             <div class="rooms">
                 <div>
                     <ul id="room-list" data-bind="foreach: chatRooms">
@@ -50,8 +51,7 @@
         <div class="col-md-7 middle">
             <div class="chat-header">
                 <h5 id="joinedRoom">Početna</h5>
-                <div id="edit-room">
-                </div>
+
             </div>
             <div id="pinnedMess">
                 <!-- ko if: pinnedMessages -->
@@ -73,6 +73,7 @@
 
             <div class="chat-body better-scrollbar">
                 <ul data-bind="foreach: chatMessages">
+
                     <li>
                         <div class="chat-message" data-bind="css: $data.isMine() === true ? 'ismine' : 'isother'">
                             <div class="left-side">
@@ -139,6 +140,7 @@
             </div>
         </div>
 
+      
 
         <div class="col-md-3 right">
             <div class="header">
@@ -200,74 +202,10 @@
             <div class="modal-footer" style="margin-top: 300px!important;">
                 <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: closeRoom">Zatvori</button>
                 <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: createRoom">Napravi sobu</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- EDIT ROOM MODAL -->
-<div class="modal" id="edit-room-modal">
-    <div class="modal-dialog" style="width: 70%!important">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" data-bind="click: closeRoom">&times;</button>
-                <h4 class="modal-title">Izmeni sobu</h4>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" class="form-control" id="editedRoomId" placeholder="Naziv sobe">
-                <input type="text" class="form-control" id="editedRoomName" placeholder="Naziv sobe">
-                <div style=" width: 50%; float: left">
-                    <h3>Korisnici koji ne pripadaju sobi</h3>
-                    <div class="list-group" data-bind="foreach: notChatUserRooms">
-                        <div style="height: 50px;">
-                            <p data-bind="text: $data.displayName" style="float:left; width: 60%"></p>
-                            <button type="button" class="btn btn-primary" data-bind="click: $parent.addUserToRoom.bind($parent, $data, 'edit')">Izaberi</button>
-                        </div>
-                    </div>
-                </div>
-                <div style=" width: 50%; float: right">
-                    <h3>Korisnici koji pripadaju sobi</h3>
-                    <div class="list-group" data-bind="foreach: chatUserRooms">
-                        <div style="height: 45px;">
-                            <p data-bind="text: $data.displayName" style="float:left; width: 60%"></p>
-                            <!-- ko if: $data.roomRole-->
-                            Uloga
 
-                            <!-- /ko -->
-                            <!-- ko ifnot: $data.roomRole -->
-                            <button type="button" class="btn btn-primary" data-bind="click: $parent.removeUserSelectedRoom.bind($parent, $data, 'edit')">Izbriši</button>
-                            <!-- /ko -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer" style="margin-top: 300px!important;">
-                <button type="button" class="btn btn-default" data-dismiss="modal" data-bind="click: closeRoom">Zatvori</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: editRoom">Izmeni</button>
             </div>
         </div>
     </div>
-</div>
-<!-- REMOVE ROOM MODAL -->
-<div class="modal" id="remove-room-modal">
-    <div class="modal-dialog" style="width: 900px!important;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Obriši sobu</h4>
-            </div>
-            <div class="modal-body">
-                <p>Da li ste sigurni da želite da obrišete ovu sobu?</p>
-            </div>
-            <div class="modal-footer" \>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" data-bind="click: deleteRoom">Da</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Ne</button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="alert alert-dismissible alert-warning hidden" id="errorAlert">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <p data-bind="text:serverInfoMessage"></p>
 </div>
 
 

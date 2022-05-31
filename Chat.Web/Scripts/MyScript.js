@@ -8,7 +8,7 @@
         if (text.startsWith("/")) {
             text = text.split(")")[1];
         }
-
+        //Add text
         //text = "/private(" + username + ") " + text;
         //input.val(text);
         input.focus();
